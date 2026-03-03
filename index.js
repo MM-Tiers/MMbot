@@ -1,14 +1,12 @@
 const { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes, EmbedBuilder } = require('discord.js');
 
 // ===== CONFIG =====
-// 1. Reset your token at https://discord.com/developers/applications
-const TOKEN = process.env.DISCORD_TOKEN;
+const TOKEN = process.env.DISCORD_TOKEN; 
 const CLIENT_ID = '1476597072974053426'; 
 const GUILD_ID = '1475860440486641966'; 
 const VERIFIED_TESTER_ROLE_ID = '1476235865922732232'; 
 const RESULTS_CHANNEL_ID = '1475934478143590510'; 
 
-// Role IDs for ranks
 const ROLES = {
     HT4: '1476236320622776386',
     LT3: '1476236035649175777'
@@ -75,7 +73,6 @@ client.on('interactionCreate', async interaction => {
         const tester = interaction.user; 
 
         try {
-            // 1. Give the Role (HT4 and LT3 only)
             const member = await interaction.guild.members.fetch(targetUser.id);
             let roleGivenMessage = "";
 
@@ -87,7 +84,6 @@ client.on('interactionCreate', async interaction => {
                 }
             }
 
-            // 2. Build the Embed
             const resultsEmbed = new EmbedBuilder()
                 .setColor('#ff0000')
                 .setDescription(`<@${targetUser.id}>`)
@@ -104,7 +100,6 @@ client.on('interactionCreate', async interaction => {
                 embeds: [resultsEmbed] 
             });
 
-            // 3. Auto-reactions
             const emojis = ['👑', '🥳', '😱', '😪', '😂', '💀'];
             for (const emoji of emojis) {
                 await sentMessage.react(emoji);
@@ -121,15 +116,5 @@ client.on('interactionCreate', async interaction => {
     }
 });
 
-client.login(process.env.DISCORD_TOKEN);
-
-const { Client, GatewayIntentBits } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
-
-// Use the environment variable from Railway
-client.login(process.env.DISCORD_TOKEN);
-
-// Optional: basic ready message
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}`);
-});
+// The bot logs in here
+client.login(TOKEN);
