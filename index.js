@@ -44,6 +44,21 @@ const commands = [
                     { name: 'High Tier 4', value: 'HT4' },
                     { name: 'Low Tier 3', value: 'LT3' },
                 ))
+        .addStringOption(option =>
+            option.setName('gm')
+                .setDescription('The gamemode tested')
+                .setRequired(true)
+                .addChoices(
+                    { name: 'Cart', value: 'Cart' },
+                    { name: 'Crystal', value: 'Crystal' },
+                    { name: 'Sword', value: 'Sword' },
+                    { name: 'Mace', value: 'Mace' },
+                    { name: 'Dia Pot', value: 'Dia Pot' },
+                    { name: 'Dia SMP', value: 'Dia SMP' },
+                    { name: 'Nether Pot', value: 'Nether Pot' },
+                    { name: 'UHC', value: 'UHC' },
+                    { name: 'Axe', value: 'Axe' }
+                ))
 ].map(command => command.toJSON());
 
 const rest = new REST({ version: '10' }).setToken(TOKEN);
@@ -70,6 +85,7 @@ client.on('interactionCreate', async interaction => {
         const targetUser = interaction.options.getUser('user');
         const mcUsername = interaction.options.getString('username');
         const rankValue = interaction.options.getString('rank');
+        const gmValue = interaction.options.getString('gm');
         const tester = interaction.user; 
 
         try {
@@ -86,13 +102,15 @@ client.on('interactionCreate', async interaction => {
 
             const resultsEmbed = new EmbedBuilder()
                 .setColor('#ff0000')
+                .setAuthor({ name: `${mcUsername}'s Test Results 🏆` })
                 .setDescription(`<@${targetUser.id}>`)
-                .setFields(
-                    { name: `${mcUsername}'s Test Results 🏆`, value: '\u200B' },
-                    { name: 'Tester:', value: `<@${tester.id}>`, inline: false },
-                    { name: 'Username:', value: `${mcUsername}`, inline: false },
+                .addFields(
+                    { name: 'tester:', value: `<@${tester.id}>`, inline: false },
+                    { name: 'username:', value: `${mcUsername}`, inline: false },
+                    { name: 'gm:', value: `${gmValue}`, inline: false },
                     { name: 'Rank Earned:', value: `**${rankValue}**`, inline: false }
-                );
+                )
+                .setTimestamp();
 
             const logChannel = await client.channels.fetch(RESULTS_CHANNEL_ID);
             const sentMessage = await logChannel.send({ 
@@ -106,15 +124,14 @@ client.on('interactionCreate', async interaction => {
             }
 
             await interaction.editReply({ 
-                content: `✅ Logged results for **${mcUsername}**${roleGivenMessage}!` 
+                content: `✅ Logged results for **${mcUsername}** (${gmValue})${roleGivenMessage}!` 
             });
 
         } catch (error) {
             console.error(error);
-            await interaction.editReply({ content: 'Error processing test results. Check bot permissions (needs "Manage Roles").' });
+            await interaction.editReply({ content: 'Error processing test results.' });
         }
     }
 });
 
-// The bot logs in here
 client.login(TOKEN);
