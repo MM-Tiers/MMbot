@@ -57,6 +57,7 @@ const commands = [
                     { name: 'Dia SMP', value: 'Dia SMP' },
                     { name: 'Nether Pot', value: 'Nether Pot' },
                     { name: 'UHC', value: 'UHC' },
+                    { name: 'SMP', value: 'SMP' },
                     { name: 'Axe', value: 'Axe' }
                 ))
 ].map(command => command.toJSON());
