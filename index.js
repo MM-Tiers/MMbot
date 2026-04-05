@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits, SlashCommandBuilder, REST, Routes, EmbedBuilder } = require('discord.js');
 
 // ===== CONFIG =====
-const TOKEN = 'MTQ3NjU5NzA3Mjk3NDA1MzQyNg.GFaqcC.a4fFl6BZKxNsYqogTGJaiTLRZdpAq_Akr4DfgE'; 
+const TOKEN = 'MTQ3NjU5NzA3Mjk3NDA1MzQyNg.Gne33v.0_owDVGlytyMcwSFomT3cI5vOGs5SQAP7uSAew'; 
 const CLIENT_ID = '1476597072974053426'; 
 const GUILD_ID = '1475860440486641966'; 
 const VERIFIED_TESTER_ROLE_ID = '1476235865922732232'; 
